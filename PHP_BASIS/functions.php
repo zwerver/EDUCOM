@@ -1,21 +1,23 @@
 <?php
-/**
- * @echo current year.
- */
+
+$userdata = 0;
 function getYear(){
 
     return date("Y");
 }
 function getHead(){
+    global $userdata;
     echo "<!DOCTYPE html><html lang=\"en\">";
     echo "<head></head><link rel=\"stylesheet\" href=\"css/basis.css\">";
     echo "  <meta charset=\"UTF-8\">";
     echo " <title>Website_Tjidde</title></head><body>";
-    echo "<header class=\"header\"><a href=\"home.php\">Home</a> <a href=\"about.php\">About</a> <a href=\"contact.php\">Contact</a> </header>";
+    echo "<header class=\"header\"><a href=\"index.php?page=home\">Home</a> <a href=\"index.php?page=about\">About</a> <a href=\"index.php?page=contact\">Contact</a>";
+    if($userdata != 0){ echo "</header>";}
+    else {echo "<a href=\"index.php?page=register\">Register</a><a href=\"index.php?page=login\">Login</a></header> ";}
     }
 
 
-function getContent($PageName){
+function getContent($PageName,$Data = null){
     getHead();
 switch ($PageName) {
     case "home":
@@ -28,7 +30,9 @@ switch ($PageName) {
         getContentContact();
         break;
     case "contacted":
-        getContentContacted();
+        getContentContacted($Data);
+        break;
+    default:
         break;
 }
     getFooter();
@@ -58,7 +62,7 @@ function getContentAbout(){
 function getContentContact(){
     echo "<div class=\"body\"><h1>Contact me!</h1>
 <p>
-     <form action=\"contactResponse.php\" method=\"post\">
+     <form action=\"index.php\" method=\"post\">
     <label for=\"nameField\">Name:</label><input required=required type=\"text\" id=\"nameField\"name=\"nameField\" placeholder=\"Name\">
     <label for=\"emailField\">Email:</label><input  required=required type=\"text\" id=\"emailField\" name=\"emailField\" placeholder=\"email\">
     <label for=\"messageField\">Message:</label> <input required=required type=\"text\" id=\"messageField\"name=\"messageField\" placeholder=\"Message\">
@@ -71,5 +75,14 @@ function getContentContacted($postdata){
 echo "Welcome&nbsp;&nbsp;" . $postdata["nameField"]."<br />";
 echo "Email&nbsp;&nbsp;" . $postdata["emailField"]."<br />";
 echo "Message&nbsp;&nbsp;" . $postdata["messageField"]."<br />";
+
+}
+function getLoginPage(){
+
+}
+function login($email,$Password){
+
+}
+function register($email,$Password){
 
 }
