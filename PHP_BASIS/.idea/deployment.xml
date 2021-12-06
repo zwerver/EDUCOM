@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="TEST" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="TEST">
+        <serverdata>
+          <mappings>
+            <mapping deploy="C:\wamp64\www\php1" local="$PROJECT_DIR$" web="/php1" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
