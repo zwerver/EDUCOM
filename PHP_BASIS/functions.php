@@ -49,6 +49,9 @@ function getContent($PageName)
             logout();
             getContentHome();
             break;
+        case "registered":
+            echo getContentRegistered();
+            break;
         default:
             break;
     }
@@ -60,34 +63,7 @@ function getContent($PageName)
 /**
  * @return void
  */
-function login()
-{
 
-    $users = getUsers();
-    if(empty($_POST["email"])||empty($_POST["password"])){
-        echo 'Fill in both email and password';
-        return;
-    }
-    if(isset($_SESSION['loggedinuser']) && !empty($_SESSION['loggedinuser'] )){
-        getContent("loginFailedAlreadyLogin");
-        return;
-    }
-
-    foreach ($users as $val){
-
-        $temppassword= $val['password'];
-        $tempusername= $val['email'];
-
-        if($_POST["email"]==$tempusername&& $_POST["password"]==$temppassword){
-            $_SESSION['loggedinuser'] = $val;
-            getContent("Home");
-            return;
-        }
-    }
-    getContent("loginFailWrongInfo");
-
-
-}
 
 
 
@@ -97,20 +73,10 @@ function login()
  */
 function register()
 {
-    $users = getUsers();
-
     if(empty($_POST["name"] || empty($_POST["email"]) || empty($_POST["password"]))) {
         return;
     }
-    foreach ($users as $val){
-        $tempusername= $val['email'];
-        if($_POST["email"]==$tempusername){
-            getContent('registerFailEmailDub');
-            return;
-        }
-    }
     addUser();
-
 }
 
 /**
@@ -124,4 +90,26 @@ function logout(){
 function getYear()
 {
     return date("Y");
+}
+function v4() {
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+
+        // 32 bits for "time_low"
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+
+        // 16 bits for "time_mid"
+        mt_rand(0, 0xffff),
+
+        // 16 bits for "time_hi_and_version",
+        // four most significant bits holds version number 4
+        mt_rand(0, 0x0fff) | 0x4000,
+
+        // 16 bits, 8 bits for "clk_seq_hi_res",
+        // 8 bits for "clk_seq_low",
+        // two most significant bits holds zero and one for variant DCE1.1
+        mt_rand(0, 0x3fff) | 0x8000,
+
+        // 48 bits for "node"
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+    );
 }
