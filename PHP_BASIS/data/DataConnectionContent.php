@@ -10,15 +10,14 @@
 function getHead()
 {
     echo "<!DOCTYPE html><html lang=\"en\">";
-    echo ">";
+    echo "<head></head><link rel=\"stylesheet\" href=\"css/basis.css\">";
     echo "  <meta charset=\"UTF-8\">";
     echo " <title>Website_Tjidde</title></head><body>";
-    echo ">Contact</a>";
-
+    echo "<header class=\"header\"><a href=\"index.php?page=home\">Home</a> <a href=\"index.php?page=about\">About</a> <a href=\"index.php?page=contact\">Contact</a>";
     if (isset($_SESSION['loggedinuser']) && !empty($_SESSION['loggedinuser'] )) {
-        echo "<strong>".$_SESSION['loggedinuser']['name']. "</strong> <a href='../index.php?page=logout'> logout</a> </header>";
+        echo "<strong>".$_SESSION['loggedinuser']['NAME']. "</strong> <a href='index.php?page=logout'> logout</a> </header>";
     } else {
-        echo ">Login</a></header> ";
+        echo "<a href=\"index.php?page=register\">Register</a><a href=\"index.php?page=login\">Login</a></header> ";
     }
     echo '<div class="body">';
 }
@@ -30,6 +29,10 @@ function getFooter()
 function getContentHome()
 {
     echo "<div class=\"body\"><h1>Homepage for educom PHP Basic!</h1><p><p>    This will be the project that will guide me to a software job!</p></div>";
+}
+function getContentRegistered()
+{
+    echo "<div class=\"body\"><h1>You have registered</h1><p><p>    You can now login, useing your email and password.</p></div>";
 }
 
 function getContentAbout()
@@ -51,10 +54,15 @@ function getContentAbout()
 
 function getContentContact()
 {
-    echo ">
+    echo "<h1>Contact me!</h1>
+<p>
+     <form action=\"index.php\" method=\"post\">
+    <label for=\"nameField\">Name:</label><input required=required type=\"text\" id=\"nameField\" name=\"nameField\" placeholder=\"Name\">
+    <label for=\"emailField\">Email:</label><input  required=required type=\"text\" id=\"emailField\" name=\"emailField\" placeholder=\"email\">
+    <label for=\"messageField\">Message:</label> <input required=required type=\"text\" id=\"messageField\" name=\"messageField\" placeholder=\"Message\">
+        <input type=\"submit\" value=\"Click!\">
     </form>
-</p>
-";
+</p>";
 }
 
 function getContentContacted()
