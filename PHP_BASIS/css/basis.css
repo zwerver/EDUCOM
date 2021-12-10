@@ -30,3 +30,7 @@ a{
     list-style:none;
     border-style: solid;
 }
+.shopitem{
+    width: 150px;
+    height: auto;
+}
