@@ -1,5 +1,21 @@
 <?php
 include_once("functions.php");
+getRequestedPage();
 
-if (empty(($_GET))) getContent("home"); else getContent($_GET["page"]);
+$key = "page";
+function getRequestedPage()
+{
+    $requested_type = $_SERVER['REQUEST_METHOD'];
+    if ($requested_type == 'POST')
+    {
+        echo 'post';
+        doPost($_POST["page"]);
+    }
+    else
+    {
+        echo'get';
+        getContent($_GET["page"]);
+    }
+
+}
 
