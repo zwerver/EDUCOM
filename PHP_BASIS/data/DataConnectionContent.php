@@ -15,7 +15,11 @@ function getHead()
     echo " <title>Website_Tjidde</title></head><body>";
     echo "<header class=\"header\"><a href=\"index.php?page=home\">Home</a> <a href=\"index.php?page=about\">About</a> <a href=\"index.php?page=contact\">Contact</a>";
     if (isset($_SESSION['loggedinuser']) && !empty($_SESSION['loggedinuser'] )) {
-        echo "<strong>".$_SESSION['loggedinuser']['NAME']. "</strong> <a href='index.php?page=logout'> logout</a> </header>";
+        echo "<strong>".$_SESSION['loggedinuser']['NAME']. '</strong> <form action="index.php" method="post">
+    <button type="submit" name="logout" value="logout" class="btn-link">Logout</button>
+    <input type="hidden" name="page" value="logout" id="page">
+</form>
+ </header>';
     } else {
         echo "<a href=\"index.php?page=register\">Register</a><a href=\"index.php?page=login\">Login</a></header> ";
     }
@@ -54,35 +58,37 @@ function getContentAbout()
 
 function getContentContact()
 {
+
     echo "<h1>Contact me!</h1>
 <p>
      <form action=\"index.php\" method=\"post\">
     <label for=\"nameField\">Name:</label><input required=required type=\"text\" id=\"nameField\" name=\"nameField\" placeholder=\"Name\">
     <label for=\"emailField\">Email:</label><input  required=required type=\"text\" id=\"emailField\" name=\"emailField\" placeholder=\"email\">
     <label for=\"messageField\">Message:</label> <input required=required type=\"text\" id=\"messageField\" name=\"messageField\" placeholder=\"Message\">
+    <input id=\"page\" name=\"page\" type=\"hidden\" value=\"contacted\">
         <input type=\"submit\" value=\"Click!\">
     </form>
 </p>";
+
 }
 
 function getContentContacted()
 {
-
     if (empty($_POST["nameField"] || empty($_POST["emailField"]) || empty($_POST["messageField"])))getContent("contactFail");
     else {
         echo "Welcome&nbsp;&nbsp;" . $_POST["nameField"] . "<br />";
         echo "Email&nbsp;&nbsp;" . $_POST["emailField"] . "<br />";
         echo "Message&nbsp;&nbsp;" . $_POST["messageField"] . "<br />";
     }
-
 }
 
 function getContentLoginPage()
 {
     echo '<p>
-    <form action="login.php" method="post">
+    <form action="index.php" method="post">
     <input id="email" name="email" type="email" placeholder="email">
     <input id="password" name="password" type="password" placeholder="password">
+    <input id="page" name="page" type="hidden" value="login">
     <input type="submit">
     </form>';
 
@@ -92,12 +98,25 @@ function getContentRegister()
 {
 
     echo '<h1> Make an account on this awesome site!</h1>
-<form action="register.php" method="post">
+<form action="index.php" method="post">
     <input type="text" required="required" name="name">
     <input type="email" required="required" name="email">
     <input type="password" required="required" name="password">
+    <input id="page" name="page" type="hidden" value="register">
     <input type="submit">
 
 </form>';
+
+}
+function getContentWebshop(){
+ echo '<h1>Webshop</h1>';
+$shopItems = getItems();
+    foreach ($shopItems as $item) {
+        echo '<h3>'.$item["Name"].'</h3>';
+        echo '<p><img src="images/fiets1.jpg" class="shopitem"> €'
+            .$item["Price"].'
+    Add to shopcart!</p>';
+    }
+
 
 }
