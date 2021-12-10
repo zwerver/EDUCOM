@@ -1,12 +1,34 @@
 <?php
 include_once('data/DataConnectionUsers.php');
 include_once('data/DataConnectionContent.php');
+include_once ("data/dataConnectionShop.php");
 session_start();
+function doPost($PageName)
+{
+    switch ($PageName) {
+        case "login":
+            login();
+            break;
+        case "register":
+            register();
+            break;
+        case "contacted":
+            getContent("contacted");
+            break;
+        case"logout":
+            logout();
+            getContent("home");
+            break;
+    }
+}
 
 function getContent($PageName)
 {
     getHead();
     switch ($PageName) {
+        case"test":
+            getItems();
+            break;
         case "home":
             getContentHome();
             break;
@@ -20,9 +42,6 @@ function getContent($PageName)
             echo '<h1> Woepsie something went wrong. Please try again! </h1>';
             getContentContact();
             break;
-        case "contacted":
-            getContentContacted();
-            break;
         case "login":
             getContentLoginPage();
             break;
@@ -33,6 +52,9 @@ function getContent($PageName)
         case "loginFailedAlreadyLogin":
             echo 'you are already logged in!';
             getContentHome();
+            break;
+        case "contacted":
+            getContentContacted();
             break;
         case "register":
             getContentRegister();
@@ -45,12 +67,11 @@ function getContent($PageName)
             echo 'Woepsie there is already an account with that email!';
             getContentRegister();
             break;
-        case "logout":
-            logout();
-            getContentHome();
-            break;
         case "registered":
             echo getContentRegistered();
+            break;
+        case"webshop":
+            getContentWebshop();
             break;
         default:
             break;
@@ -58,22 +79,13 @@ function getContent($PageName)
     getFooter();
 }
 
-
-
-/**
- * @return void
- */
-
-
-
-
 /**
  * This function will check if the to register is valid if not it will throw back to the same page with an error.
  * @return void
  */
 function register()
 {
-    if(empty($_POST["name"] || empty($_POST["email"]) || empty($_POST["password"]))) {
+    if (empty($_POST["name"] || empty($_POST["email"]) || empty($_POST["password"]))) {
         return;
     }
     addUser();
@@ -84,14 +96,18 @@ function register()
  * This function will destroy the session in order to logout.
  * @return void
  */
-function logout(){
-    session_destroy();
+function logout()
+{
+    session_unset();
 }
+
 function getYear()
 {
     return date("Y");
 }
-function v4() {
+
+function v4()
+{
     return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 
         // 32 bits for "time_low"
@@ -110,6 +126,5 @@ function v4() {
         mt_rand(0, 0x3fff) | 0x8000,
 
         // 48 bits for "node"
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-    );
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
 }
