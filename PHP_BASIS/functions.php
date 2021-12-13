@@ -2,6 +2,7 @@
 include_once('data/DataConnectionUsers.php');
 include_once('data/DataConnectionContent.php');
 include_once ("data/dataConnectionShop.php");
+//GW : direct uitvoerbare code enkel in index.php!
 session_start();
 function doPost($PageName)
 {
@@ -85,6 +86,7 @@ function getContent($PageName)
  */
 function register()
 {
+//GW: gebrekkige validatie!    
     if (empty($_POST["name"] || empty($_POST["email"]) || empty($_POST["password"]))) {
         return;
     }
