@@ -36,6 +36,7 @@ function getUsers()
 function addUser()
 {
     $conn = connectDB();
+//GW: NOOIT ongefilterde POST-data gebruiken!!!!!    
     $result = $conn->query('select EMAIL from users WHERE EMAIL="' . $_POST["email"] . '"');
 
     if ($result->num_rows != 0) {
